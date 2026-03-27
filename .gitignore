@@ -1,0 +1,85 @@
+# ============================================================
+# PORTFOLIO_VBJ — .gitignore
+# Next.js 14 + TypeScript + Tailwind
+# ============================================================
+
+# ─── Next.js ────────────────────────────────────────────────
+.next/
+out/
+build/
+dist/
+
+# ─── Node ───────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# ─── Environment variables ──────────────────────────────────
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# ─── Vercel ─────────────────────────────────────────────────
+.vercel/
+
+# ─── TypeScript ─────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── OS files ───────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ─── IDE / Editor ───────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.cursor/
+
+# ─── Testing ────────────────────────────────────────────────
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# ─── Package manager locks (keep only one) ──────────────────
+# Uncomment whichever you are NOT using:
+# package-lock.json   ← uncomment if using yarn or pnpm
+# yarn.lock           ← uncomment if using npm or pnpm
+# pnpm-lock.yaml      ← uncomment if using npm or yarn
+
+# ─── Misc ───────────────────────────────────────────────────
+*.log
+*.pid
+*.seed
+*.pid.lock
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+
+# ─── Public assets to never commit ──────────────────────────
+# Uncomment if your resume PDF contains personal info
+# you don't want in a public repo:
+# public/resume.pdf

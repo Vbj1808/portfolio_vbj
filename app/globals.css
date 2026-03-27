@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Legacy tokens */
+  --sys-base: #080C10;
+  --sys-surface: #0E1318;
+  --sys-card: #111820;
+  --sys-strip: #04070A;
+  /* New design system */
+  --background: #07090D;
+  --surface: #111318;
+  --primary: #4F9EFF;
+  --accent: #4ae176;
+  --on-surface-variant: #c1c7d4;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+}
+
+html {
+  scroll-behavior: auto;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: #ffffff;
+  font-family: var(--font-body), 'DM Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(79, 158, 255, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 158, 255, 0.35);
+}
+
+/* Selection */
+::selection {
+  background: var(--primary);
+  color: #000000;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 1px solid rgba(79, 158, 255, 0.5);
+  outline-offset: 2px;
+}
+
+@layer utilities {
+  /* Grainy noise overlay — applied to fixed div in layout */
+  .grainy-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 192px 192px;
+    opacity: 0.05;
+  }
+
+  /* Ghost text stroke — applied to span/h elements */
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    color: transparent;
+  }
+
+  /* Scroll snap container */
+  .snap-container {
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    height: 100dvh; /* dynamic viewport — accounts for iOS Safari chrome */
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Scroll snap section */
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Chapter section base layout — shared by all sections */
+  .chapter-section {
+    @apply w-full flex flex-col justify-center px-6 md:px-24 overflow-hidden;
+    height: 100vh;
+    height: 100dvh; /* dynamic viewport — prevents iOS Safari chrome from hiding content */
+    position: relative;  /* NOT sticky — sticky collapses scroll height */
+    flex-shrink: 0;      /* each section contributes exactly 100vh to scroll distance */
+  }
+
+  /* Hero background layers */
+  .hero-dot-grid {
+    background-image: radial-gradient(circle, rgba(79, 158, 255, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .hero-vignette {
+    background: radial-gradient(ellipse at center, transparent 50%, #07090D 85%);
+  }
+
+  /* ── Signal beam — project card upward light broadcast ──────────────────── */
+  .signal-beam {
+    position: absolute;
+    bottom: 100%;
+    left: 20%;
+    width: 60%;
+    height: 280px;
+    pointer-events: none;
+    transform-origin: bottom center;
+    background: linear-gradient(
+      to top,
+      rgba(79, 158, 255, 0.12) 0%,
+      rgba(79, 158, 255, 0.06) 40%,
+      transparent 100%
+    );
+  }
+  /* DOKIS — wider spread, brighter base */
+  .signal-beam-dokis {
+    left: 15%;
+    width: 70%;
+    height: 320px;
+    background: linear-gradient(
+      to top,
+      rgba(79, 158, 255, 0.18) 0%,
+      rgba(79, 158, 255, 0.08) 40%,
+      transparent 100%
+    );
+  }
+
+  /* ── Pipeline chapter — CHAPTER_06 // TRANSMISSION ─────────────────────── */
+  .pipeline-grid-bg {
+    background-color: #07090D;
+    background-image:
+      linear-gradient(rgba(79, 158, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79, 158, 255, 0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Rotating radar arc — clipped decoratively by section overflow-hidden */
+  .radar-sweep {
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(79, 158, 255, 0.06) 20deg,
+      transparent 40deg
+    );
+    animation: radar-sweep 4s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Shimmer overlay on progress bar fill */
+  .progress-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 100%
+    );
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  /* Legacy utilities kept for old components */
+  .container-base {
+    @apply max-w-6xl mx-auto px-6 lg:px-10;
+  }
+  .section-y {
+    @apply py-20 md:py-28;
+  }
+  .rule {
+    @apply h-px bg-white/[0.06] w-full;
+  }
+  .label-mono {
+    @apply font-mono text-[11px] tracking-[0.15em] uppercase text-slate-500;
+  }
+  .dot-green { @apply text-emerald-400; }
+  .dot-blue { @apply text-primary; }
+  .dot-gray { @apply text-slate-600; }
+  .dot-amber { @apply text-amber-400; }
+}
+
+/* ── Page lift — outgoing section animation on backward scroll ───────────── */
+.page-lift-out {
+  animation: page-lift 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  transform-origin: center top;
+  z-index: 50;
+}
+
+@media (max-width: 768px) {
+  .page-lift-out {
+    animation: none;
+  }
+}
+
+/* ── Global keyframes (outside @layer so they're always accessible) ───────── */
+@keyframes page-lift {
+  0% {
+    transform: perspective(1200px) rotateX(0deg) translateY(0px) scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  40% {
+    transform: perspective(1200px) rotateX(4deg) translateY(-12px) scale(1.01);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: perspective(1200px) rotateX(0deg) translateY(0px) scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes radar-sweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0%   { transform: translateX(-150%); }
+  100% { transform: translateX(250%); }
+}
